@@ -1,0 +1,230 @@
+<!--  Correo03 -->
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilo.css">
+    <title>3</title>
+    <style>
+        .field {
+            margin-bottom: 10px;
+        }
+
+        .field label {
+            display: block;
+            font-size: 12px;
+            color: #777;
+        }
+
+        .field input {
+            display: block;
+            min-width: 250px;
+            line-height: 1.5;
+            font-size: 14px;
+        }
+
+        input[type="submit"] {
+            display: block;
+            padding: 6px 30px;
+            font-size: 14px;
+            background-color: #4460AA;
+            color: #fff;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+<form id="form">
+    <h1>3</h1>
+    <div class="field">
+        <label for="emailjs_correo">Correo:</label>
+        <input type="text" name="emailjs_correo" id="emailjs_correo" value="joelito_0095@hotmail.com">
+    </div>
+    <br>
+    <div class="field">
+        <label for="emailjs_name">Nombre:</label>
+        <input type="text" name="emailjs_name" id="emailjs_name">
+    </div>
+    <br>
+    <div class="field">
+        <label for="emailjs_asunto">Asunto:</label>
+        <input type="text" name="emailjs_asunto" id="emailjs_asunto">
+    </div>
+    <br>
+   
+    <br>
+    <input type="submit" id="button" value="Enviar Correo">
+
+    <div id="timer">02:00</div> <!-- Temporizador que se mostrará -->
+    <button type="button" id="startBtn">Iniciar Temporizador</button>
+    <button type="button" id="stopBtn">Detener Temporizador</button>
+</form>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script type="text/javascript">
+    // Inicializa EmailJS con tu clave pública
+    emailjs.init('_s0uxEqstGyqsn8gr');
+
+    // Variables
+    var initialTime = 120; // 60 segundos = 1 minuto
+    var timer = initialTime;
+    var countdown;
+    var isRunning = false;
+
+    // Lista de nombres aleatorios
+    var names = [
+        "Juan Pérez", "María García", "Carlos Rodríguez", "Laura Martínez", "Pedro López",
+        "Ana González", "Luis Sánchez", "Marta Fernández", "José Díaz", "Elena García",
+        "Francisco Torres", "Isabel López", "Antonio Pérez", "Raquel Sánchez", "Ricardo Martínez",
+        "Carmen Fernández", "Javier González", "Julia Herrera", "José Luis Gómez", "Esther Rodríguez",
+        "Carlos García", "Marta Ruiz", "Eduardo Díaz", "Sofía García", "Francisco López",
+        "Ana María López", "Manuel Fernández", "Verónica Pérez", "Juan Antonio Sánchez", "Beatriz Gómez",
+        "Alejandro Rodríguez", "Patricia Martínez", "Carlos Javier Sánchez", "Sara Díaz", "Raúl López",
+        "María José Ruiz", "José Antonio Fernández", "Pablo Rodríguez", "Lourdes Martínez", "Fernando Pérez",
+        "Celia Fernández", "Ricardo Sánchez", "Lina González", "Mónica Gómez", "Antonio Díaz",
+        "Lucía Pérez", "Luis Carlos Rodríguez", "Ángel Sánchez", "María Luisa González", "David Martínez"
+    ];
+
+    // Lista de asuntos aleatorios
+    var subjects = [
+  "¡Gracias por tu tiempo!", "¡Felicidades!", "Información importante", "Actualización", "Asunto urgente", "Notificación importante",
+  "Urgente: Actualización sobre políticas clave", "Importante: Cambios en la legislación vigente", "Recordatorio: Plazo para la presentación de solicitudes",
+  "Atención: Información crítica sobre servicios disponibles", "Notificación: Evaluación del impacto comunitario", "Urgente: Información sobre nuevas regulaciones",
+  "Importante: Actualización en los procedimientos administrativos", "Recordatorio: Fecha límite para la entrega de documentos", "Atención: Cambios relevantes en la normativa local",
+  "Notificación: Resultados de la evaluación de proyectos", "Urgente: Modificaciones en los requisitos de inscripción", "Importante: Revisión de políticas de seguridad",
+  "Recordatorio: Taller informativo sobre servicios", "Atención: Información sobre financiamiento disponible", "Notificación: Evaluación de riesgos comunitarios",
+  "Urgente: Directrices sobre la gestión de recursos", "Importante: Nueva normativa sobre salud pública", "Recordatorio: Convocatoria para participación ciudadana",
+  "Atención: Cambios en los horarios de atención", "Notificación: Impacto de nuevas leyes en la comunidad", "Urgente: Aclaraciones sobre el proceso de quejas",
+  "Importante: Información sobre subsidios disponibles", "Recordatorio: Encuesta sobre satisfacción de servicios", "Atención: Plazos para renovaciones de licencias",
+  "Notificación: Resultados de la auditoría de servicios", "Urgente: Ajustes en los criterios de selección", "Importante: Charla informativa sobre derechos ciudadanos",
+  "Recordatorio: Registro para la próxima reunión", "Atención: Actualización sobre el acceso a servicios", "Notificación: Cambios en las tarifas de servicios",
+  "Urgente: Información sobre emergencias sanitarias", "Importante: Actualización de políticas ambientales", "Recordatorio: Plazo para comentarios sobre propuestas",
+  "Atención: Información sobre programas de apoyo", "Notificación: Evaluación del bienestar comunitario", "Urgente: Nuevas medidas de seguridad",
+  "Importante: Modificaciones en el programa de beneficios", "Recordatorio: Reunión sobre cambios legislativos", "Atención: Información crítica sobre proyectos en curso",
+  "Notificación: Actualización de contactos de emergencia", "Urgente: Normativas sobre la protección de datos", "Importante: Información sobre oportunidades de voluntariado",
+  "Recordatorio: Revisión de políticas de inclusión", "Atención: Información sobre las ferias comunitarias", "Notificación: Resultados de la consulta ciudadana",
+  "Urgente: Cambios en la gestión de residuos", "Importante: Directrices sobre accesibilidad", "Recordatorio: Registro para capacitaciones disponibles",
+  "Atención: Información sobre horarios de operación", "Notificación: Proyectos de infraestructura en evaluación", "Urgente: Asesoría legal gratuita disponible",
+  "Importante: Propuestas de mejora en servicios públicos", "Recordatorio: Encuesta sobre la calidad del aire", "Atención: Cambios en la distribución de recursos",
+  "Notificación: Actividades programadas para la comunidad", "Urgente: Actualización sobre servicios de emergencia", "Importante: Información sobre derechos laborales",
+  "Recordatorio: Plazo para inscripciones a programas", "Atención: Cambios en la normativa de transporte", "Notificación: Evaluación de la calidad del agua",
+  "Urgente: Información sobre programas de nutrición", "Importante: Actualización sobre políticas de vivienda", "Recordatorio: Reunión informativa sobre salud",
+  "Atención: Cambios en los horarios de clases", "Notificación: Resultados de la auditoría financiera", "Urgente: Aclaraciones sobre las becas disponibles",
+  "Importante: Información sobre el sistema de salud", "Recordatorio: Plazo para propuestas de proyectos", "Atención: Nuevas oportunidades de capacitación",
+  "Notificación: Cambios en la regulación de comercio", "Urgente: Información sobre el clima y emergencias", "Importante: Directrices sobre el uso de tecnología",
+  "Recordatorio: Inscripción para talleres gratuitos", "Atención: Información sobre asistencia psicológica", "Notificación: Evaluación de la seguridad vial",
+  "Urgente: Modificaciones en los servicios públicos", "Importante: Actualización de programas culturales", "Recordatorio: Encuesta sobre la satisfacción ciudadana",
+  "Atención: Información sobre acceso a internet", "Notificación: Proyectos de desarrollo comunitario", "Urgente: Cambios en la normativa de salud mental",
+  "Importante: Directrices sobre protección animal", "Recordatorio: Registro para el programa de empleo", "Atención: Información sobre el reciclaje y residuos",
+  "Notificación: Resultados de la evaluación escolar", "Urgente: Información sobre la seguridad infantil", "Importante: Actualización sobre políticas educativas",
+  "Recordatorio: Encuesta sobre movilidad urbana", "Atención: Cambios en la administración de recursos", "Notificación: Actividades recreativas para la comunidad",
+  "Urgente: Asesoría financiera gratuita disponible", "Importante: Propuestas para el desarrollo económico", "Recordatorio: Taller sobre habilidades digitales",
+  "Atención: Información sobre programas de reinserción", "Notificación: Evaluación del impacto social", "Urgente: Información sobre el control de plagas",
+  "Importante: Cambios en el acceso a la justicia", "Recordatorio: Plazo para la presentación de quejas", "Atención: Información sobre programas de arte",
+  "Notificación: Cambios en la normativa de salud pública", "Urgente: Directrices sobre la protección del patrimonio", "Importante: Información sobre proyectos de energía renovable",
+  "Recordatorio: Inscripción a programas de voluntariado", "Atención: Información sobre servicios de apoyo a la infancia", "Notificación: Resultados de la evaluación ambiental",
+  "Urgente: Cambios en la planificación urbana", "Importante: Actualización sobre servicios de transporte público", "Recordatorio: Encuesta sobre el uso de espacios públicos",
+  "Atención: Cambios en la normativa de prevención de delitos", "Notificación: Proyectos de mejora en infraestructura", "Urgente: Información sobre emergencias climáticas",
+  "Importante: Directrices sobre derechos humanos", "Recordatorio: Registro para actividades comunitarias", "Atención: Información sobre programas de salud mental",
+  "Notificación: Evaluación de proyectos de vivienda", "Urgente: Cambios en la normativa de seguridad alimentaria", "Importante: Propuestas para la protección del medio ambiente",
+  "Recordatorio: Encuesta sobre el uso de servicios públicos", "Atención: Información sobre becas y ayudas económicas", "Notificación: Actividades de concienciación ambiental"
+];
+
+    // Función para generar un nombre aleatorio
+    function getRandomName() {
+        var randomIndex = Math.floor(Math.random() * names.length);
+        return names[randomIndex];
+    }
+
+    // Función para generar un asunto aleatorio
+    function getRandomSubject() {
+        var randomIndex = Math.floor(Math.random() * subjects.length);
+        return subjects[randomIndex];
+    }
+
+    // Función para iniciar el temporizador
+    function startTimer() {
+        if (isRunning) return; // No permitir iniciar si ya está corriendo
+        isRunning = true;
+
+        countdown = setInterval(function() {
+            var minutes = Math.floor(timer / 60);
+            var seconds = timer % 60;
+            
+            // Formato MM:SS
+            document.getElementById('timer').textContent = formatTime(minutes) + ":" + formatTime(seconds);
+            
+            // Cuando el temporizador llegue a cero, enviamos el correo
+            if (timer <= 0) {
+                clearInterval(countdown); // Detenemos el temporizador
+                sendEmail(); // Llamamos a la función para enviar el correo
+                isRunning = false;
+                timer = initialTime; // Reinicia el temporizador a 1 minuto
+                document.getElementById('timer').textContent = formatTime(Math.floor(timer / 60)) + ":" + formatTime(timer % 60); // Muestra 01:00
+            }
+            
+            timer--;
+        }, 1000); // Actualiza cada segundo
+    }
+
+    // Función para detener el temporizador
+    function stopTimer() {
+        clearInterval(countdown);
+        isRunning = false;
+        timer = initialTime; // Reinicia el temporizador a 1 minuto
+        document.getElementById('timer').textContent = formatTime(Math.floor(timer / 60)) + ":" + formatTime(timer % 60); // Muestra 01:00
+        alert('Temporizador detenido. Reiniciado a 02:00.');
+    }
+
+    // Función para formatear el tiempo (agrega un cero cuando sea menor a 10)
+    function formatTime(time) {
+        return time < 10 ? "0" + time : time;
+    }
+
+    // Función para enviar el correo
+    function sendEmail() {
+        var email = document.getElementById('emailjs_correo').value.trim(); // Obtener y limpiar el valor del correo
+        if (!email) {
+            return; // Si no hay correo, no enviamos nada
+        }
+
+        var randomName = getRandomName(); // Generamos un nombre aleatorio
+        var randomSubject = getRandomSubject(); // Generamos un asunto aleatorio
+
+        document.getElementById('emailjs_name').value = randomName; // Establecemos el nombre aleatorio en el campo correspondiente
+        document.getElementById('emailjs_asunto').value = randomSubject; // Establecemos el asunto aleatorio en el campo correspondiente
+
+        // Asignamos el correo destinatario al campo correspondiente en el formulario
+        document.getElementById('emailjs_correo').value = email;
+
+        emailjs.sendForm('service_8izivgd', 'template_672pwaf', document.getElementById('form'))
+            .then(function() {
+                // Iniciar el temporizador de 3 segundos antes de refrescar la página
+                setTimeout(function() {
+                    location.reload(); // Recarga la página después de 3 segundos
+                }, 3000); // 3000 ms = 3 segundos
+
+            }, function(error) {
+                // Si hay un error al enviar, se puede manejar aquí, pero no muestra nada
+                console.error('Error al enviar el correo: ' + JSON.stringify(error));
+            });
+    }
+
+    // Manejo del envío del formulario cuando llegue a 0 el temporizador
+    document.getElementById('form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Evita el comportamiento por defecto del formulario
+        sendEmail(); // Llama a la función sendEmail cuando el formulario se envía manualmente
+    });
+
+    // Asignar eventos a los botones
+    document.getElementById('startBtn').addEventListener('click', startTimer);
+    document.getElementById('stopBtn').addEventListener('click', stopTimer);
+
+    // Iniciar el temporizador inmediatamente después de la carga de la página
+    startTimer();
+</script>
+</body>
+</html>

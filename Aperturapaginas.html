@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activar Páginas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        h1 {
+            color: #333;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+        input[type="datetime-local"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #temporizador {
+            font-weight: bold;
+            margin-top: 15px;
+        }
+        #confirmacion {
+            margin-top: 10px;
+            color: #333;
+        }
+    </style>
+    <script>
+        // Variables para la hora de activación
+        var horaActivacion = 16;  // Hora por defecto (16:00 PM)
+        var minutosActivacion = 25; // Minutos por defecto (25 minutos)
+        var temporizadorID; // Variable para almacenar el temporizador
+
+        // Función para obtener el tiempo restante
+        function obtenerTiempoRestante() {
+            var horaActual = new Date();
+            var horaActivacionDate = new Date(horaActual);
+            horaActivacionDate.setHours(horaActivacion); // Hora de activación
+            horaActivacionDate.setMinutes(minutosActivacion); // Minutos de activación
+            horaActivacionDate.setSeconds(0); // Segundos de activación (00 segundos)
+
+            var tiempoRestante = horaActivacionDate - horaActual; // Calcula la diferencia en milisegundos
+
+            // Si la hora programada ya pasó, ajustamos para el próximo día
+            if (tiempoRestante < 0) {
+                horaActivacionDate.setDate(horaActivacionDate.getDate() + 1); // Suma un día
+                tiempoRestante = horaActivacionDate - horaActual;
+            }
+
+            // Calcula el tiempo restante en horas, minutos y segundos
+            var horasRestantes = Math.floor(tiempoRestante / (1000 * 60 * 60));
+            var minutosRestantes = Math.floor((tiempoRestante % (1000 * 60 * 60)) / (1000 * 60));
+            var segundosRestantes = Math.floor((tiempoRestante % (1000 * 60)) / 1000);
+
+            // Muestra el tiempo restante
+            document.getElementById("temporizador").innerHTML = "Faltan " + horasRestantes + " horas, " + minutosRestantes + " minutos y " + segundosRestantes + " segundos.";
+
+            // Llama a la función nuevamente cada segundo para actualizar el temporizador
+            temporizadorID = setTimeout(obtenerTiempoRestante, 1000);
+        }
+
+        // Función para abrir las páginas
+        function abrirPaginas() {
+            var horaActual = new Date().getHours();  // Obtiene la hora actual
+            var minutos = new Date().getMinutes();   // Obtiene los minutos actuales
+
+            // Muestra en consola la hora actual y la hora de activación
+            console.log("Hora actual: " + horaActual + ":" + minutos);
+            console.log("Hora de activación: " + horaActivacion + ":" + minutosActivacion);
+
+            // Compara si la hora actual coincide con la hora de activación
+            if (horaActual === horaActivacion && minutos === minutosActivacion) {
+                // Abre las tres páginas
+                window.open('http://localhost/Senado/01.html', '_blank');
+                window.open('http://localhost/Senado/02.html', '_blank');
+                window.open('http://localhost/Senado/03.html', '_blank');
+            }
+        }
+
+        // Ejecuta la función cada minuto para revisar la hora
+        setInterval(abrirPaginas, 60000);
+
+        // Ejecuta el temporizador para mostrar el tiempo restante
+        window.onload = function() {
+            obtenerTiempoRestante();
+        };
+
+        // Función para obtener la fecha y hora seleccionada y configurar la activación
+        function configurarActivacion() {
+            var fechaSeleccionada = document.getElementById("fechaHora").value; // Obtiene la fecha y hora seleccionada
+            var fecha = new Date(fechaSeleccionada); // Convierte la fecha seleccionada a un objeto Date
+
+            // Establece la hora de activación con la fecha seleccionada
+            horaActivacion = fecha.getHours();
+            minutosActivacion = fecha.getMinutes();
+
+            // Muestra el mensaje confirmando los cambios
+            document.getElementById("confirmacion").innerHTML = "Hora de activación configurada para: " + fecha.toLocaleString();
+
+            // Activa el temporizador automáticamente después de configurar la hora
+            obtenerTiempoRestante();
+        }
+
+        // Función para detener el temporizador
+        function detenerTemporizador() {
+            clearTimeout(temporizadorID); // Detiene el temporizador
+            document.getElementById("temporizador").innerHTML = "Temporizador detenido.";
+        }
+
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Automatización de apertura de páginas</h1>
+        <p>Este código abrirá tres páginas en la hora y fecha seleccionadas.</p>
+
+        <!-- Campo de selección de fecha y hora -->
+        <label for="fechaHora">Selecciona la fecha y hora de activación:</label>
+        <input type="datetime-local" id="fechaHora" name="fechaHora">
+        
+        <!-- Botón para confirmar la configuración -->
+        <button onclick="configurarActivacion()">Aceptar</button>
+
+        <p id="confirmacion">Hora de activación configurada para: 16:25 PM</p>
+
+        <!-- Botón para detener el temporizador -->
+        <button onclick="detenerTemporizador()">Detener temporizador</button>
+
+        <p id="temporizador">Cargando tiempo restante...</p>
+    </div>
+</body>
+</html>

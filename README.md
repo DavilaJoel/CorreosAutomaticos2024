@@ -8,5 +8,5 @@ Fase 03: Iniciar Visual Code.-<br>
 Fase 04: Arrastrar carpeta descargarda, en el interior de Visual Code.-<br>
 Fase 05: Modificar linea 42, hosterprueba@gmail.com por correo a preferencia (input type="text" name="emailjs_correo" id="emailjs_correo" value="hosterprueba@gmail.com").-<br>
 Fase 06: Guardar codigo... (control + s).-<br>
-Fase 07: Ejecutar html(01.html=01:00m, 02.html=01:30m/s, 03.html=02:00m/s) a preferencia  o en su conjunto "aperturasdepagina.hml"(el cual dispone de funcion automatica de apertura total, de los tres 03 html; fecha y hora, determinada a elegir)<br>
+Fase 07: Ejecutar html(01.html=01:00m, 02.html=01:30m/s, 03.html=02:00m/s) a preferencia  o en su conjunto "aperturasdepagina.hml"(el cual dispone de funcion automatica de apertura total, de los tres 03 html; con fecha y hora, a elegir)<br>
 Fase 08: Fin.-

@@ -5,7 +5,7 @@ Fase 01: Descargar el proyecto... (OBSERVAR CARPETA DE DESCARGA).- <br>
 Fase 02: Instalar Visual Code, VERSION PC (https://code.visualstudio.com/).-<br>
 Fase 03: Iniciar Visual Code, una ves instalado.-<br>
 Fase 04: Arrastrar carpeta descargarda, en el interior de visual code.-<br>
-Fase 05: Modificar linea 42, hosterprueba@gmail.com por correo a preferencia (input type="text" name="emailjs_correo" id="emailjs_correo" value="hosterprueba@gmail.com").-<br>
+Fase 05: Modificar linea 42, hosterprueba@gmail.com por correo a preferencia (input type="text" name="emailjs_correo" id="emailjs_correo" value="hosterprueba@gmail.com").-
 Fase 06: Guardar codigo... (control + s).-<br>
 Fase 07: Ejecutar archivo de preferencia (01.html=01:00m, 02.html=01:30, 03.html=02:00) o en su conjunto "aperturasdepagina.hml"<br>
 Fase 08: Fin.-

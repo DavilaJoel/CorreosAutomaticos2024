@@ -2,7 +2,7 @@
 
 Aplicación web que envía correos automáticamente usando EmailJS. Incluye tres 03 paginas diferentes con sus respectivos temporizadorez de 01 miuto, 01:30 minuto y treinta segundos, y 02:00 dos minutos; que al llegar a cero, genera un nombre y asunto aleatorio para enviarlo. También permite iniciar o detener el temporizador manualmente. Asimismo dispone de un index general("aperturapagina.html"), el cual permite iniciar, las tres paginas automaticamente (01.html,02.html,03.html), en fecha y hora a determinada... Ideal para incomodar a empresas, destinadas a ofrecer trabajo.-
 
-Fase 01: Descargar el proyecto... (OBSERVAR CARPETA DE DESCARGA).- <br>
+Fase 01: Descargar el proyecto.- <br>
 Fase 02: Instalar Visual Code, VERSION PC (https://code.visualstudio.com/).-<br>
 Fase 03: Iniciar Visual Code.-<br>
 Fase 04: Arrastrar carpeta descargarda, en el interior de Visual Code.-<br>

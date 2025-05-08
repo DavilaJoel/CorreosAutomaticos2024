@@ -1,5 +1,7 @@
 # Temporizador de Envío Automático de Correos 2024.-
+<p align="center">
 Aplicación web que envía correos automáticamente usando EmailJS. Incluye tres 03 paginas diferentes con sus respectivos temporizadorez de 01 miuto, 01:30 minuto y treinta segundos, y 02:00 dos minutos; que al llegar a cero, genera un nombre y asunto aleatorio para enviarlo. También permite iniciar o detener el temporizador manualmente. Asimismo dispone de un index general("aperturapagina.html"), el cual puede iniciar, las tres paginas automaticamente (01.html,02.html,03.html), en hora y fecha determinada... Ideal para incomodar a empresas, destinadas a ofrecer trabajo.-
+</p>
 
 Fase 01: Descargar el proyecto... (OBSERVAR CARPETA DE DESCARGA).- <br>
 Fase 02: Instalar Visual Code, VERSION PC (https://code.visualstudio.com/).-<br>
